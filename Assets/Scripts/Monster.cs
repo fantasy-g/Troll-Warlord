@@ -32,7 +32,6 @@ public class Monster : MonoBehaviour {
     // 空气墙碰撞
     protected void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.tag == "AirWall") {
-            bool leftDir = collision.transform.position.x > transform.position.x;
             MoveBack(collision);
         }
     }
