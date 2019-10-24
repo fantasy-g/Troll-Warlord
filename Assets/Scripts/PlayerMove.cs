@@ -44,7 +44,7 @@ public class PlayerMove : MonoBehaviour {
 
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
-        FallForce = 1.3f * JumpForce;
+        FallForce = 1.5f * JumpForce;
     }
 	
 	void Update () {
@@ -101,18 +101,20 @@ public class PlayerMove : MonoBehaviour {
 
     private void Move() {
         float h = joystick.Horizontal();
+        if (h != 0) Flip(h < 0);
         rigidbody.velocity = new Vector2(h * Speed, rigidbody.velocity.y);
 
-        // Animator [Move & Idle]
-        if (isJumping || animator != null) {
+        // Animator [Walk & Idle]
+        if (isJumping || animator == null) {
             return;
         }
-        else if (h != 0 && !animator.GetCurrentAnimatorStateInfo(0).IsName("Move")) {
-            animator.Play("Move");
+        else if (h != 0 && !animator.GetCurrentAnimatorStateInfo(0).IsName("Walk")) {
+            animator.Play("Walk");
         }
         else if (h == 0 && !animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
             animator.Play("Idle");
         }
+        animator.SetFloat("Speed", Mathf.Max(0.2f, Mathf.Abs(h)));
     }
 
     private void Jump(object sender, EventArgs e) {
@@ -135,5 +137,13 @@ public class PlayerMove : MonoBehaviour {
 
     private void GroundCheck() {
         isGrounded = Physics2D.OverlapCircle(FootPos.position, GroundCheckRadius, GroundLayerMask);
+    }
+
+    private void Flip(bool left) {
+        Vector3 scale = transform.localScale;
+        if ((left && scale.x < 0) || (!left && scale.x > 0))
+            return;
+        scale.x *= (left && scale.x > 0) || (!left && scale.x < 0) ? -1 : 1;
+        transform.localScale = scale;
     }
 }
