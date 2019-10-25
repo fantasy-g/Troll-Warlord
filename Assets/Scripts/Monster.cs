@@ -10,6 +10,7 @@ public class Monster : MonoBehaviour {
     public float Speed = 5;
     protected float speed = 0;
     protected Vector3 direction = new Vector3(1, 0);
+    protected bool CollisonEnable = true;
 
 
     void Start() {
@@ -22,15 +23,18 @@ public class Monster : MonoBehaviour {
 
     // 碰撞
     private void OnCollisionEnter2D(Collision2D collision) {
+        if (!CollisonEnable) return;
         if (collision.gameObject.tag != "Player") {
             MoveBack(collision.collider);
         }
         else {
             // GameManager.Instance.Player.Hurt(Damage);
+            Die();      /// test
         }
     }
-    // 空气墙碰撞
+    
     protected void OnTriggerEnter2D(Collider2D collision) {
+        if (!CollisonEnable) return;
         if (collision.gameObject.tag == "AirWall") {
             MoveBack(collision);
         }
@@ -51,13 +55,33 @@ public class Monster : MonoBehaviour {
         transform.localScale = scale;
     }
 
-    public IEnumerator Die() {
+
+    protected float waitForDieEffectTime = 0f;
+
+    public void Die() {
+        StartCoroutine(_Die());
+    }
+
+    protected void DieEffect() {
+        Animator anim = GetComponentInChildren<Animator>();
+        if (anim) {
+            anim.Play("Die");
+            waitForDieEffectTime = Mathf.Max(waitForDieEffectTime, anim.GetCurrentAnimatorStateInfo(0).length);
+        }
+
+        ParticleSystem particle = transform.GetComponentInChildren<ParticleSystem>();
+        if (particle) {
+            particle.Play();
+            waitForDieEffectTime = Mathf.Max(waitForDieEffectTime, particle.main.duration);
+        }
+    }
+
+    private IEnumerator _Die() {
         speed = 0;
-
-        // 死亡效果、死亡动画
-        // ... Fade 效果
-
-        yield return new WaitForSeconds(0.5f);
+        CollisonEnable = false;
+        DieEffect();
+        yield return new WaitForSeconds(waitForDieEffectTime);
         Destroy(gameObject);
     }
+
 }
