@@ -47,7 +47,9 @@ public class SceneMove : MonoBehaviour {
         // 场景切换动画
         if (Animator) {
             Animator.SetTrigger("End");
-            yield return new WaitForEndOfFrame();
+            while (!Animator.GetCurrentAnimatorStateInfo(0).IsName("End")) {
+                yield return new WaitForEndOfFrame();
+            }
             float sec = Animator.GetCurrentAnimatorStateInfo(0).length;
             yield return new WaitForSeconds(sec);
         }
@@ -84,7 +86,9 @@ public class SceneMove : MonoBehaviour {
         // 场景切换动画
         if (Animator) {
             Animator.SetTrigger("End");
-            yield return new WaitForEndOfFrame();
+            while (!Animator.GetCurrentAnimatorStateInfo(0).IsName("End")) {
+                yield return new WaitForEndOfFrame();
+            }
             float sec = Animator.GetCurrentAnimatorStateInfo(0).length;
             yield return new WaitForSeconds(sec);
         }
