@@ -6,15 +6,20 @@ using UnityEngine.UI;
 
 public class SceneMove : MonoBehaviour {
 
-    public Text Text;
-    public Slider Slider;
+    public string DefaultNextScene;
     public bool FastMode = false;
-    public int StepOfProgress = 2;     // 平滑进度的间隔
-    [Space]
+
+    [Header("Configure")]
     public string AutoLoadScene = "";
     public float AutoLoadTime = 5f;
     public bool DebugLog = true;
+    public int StepOfProgress = 2;     // 平滑进度的间隔
+    public Text Text;
+    public Slider Slider;
 
+    [Header("Scene Transition")]
+    public Animator Animator;
+    
 
     private IEnumerator Start() {
         if (Text)
@@ -27,22 +32,29 @@ public class SceneMove : MonoBehaviour {
         }
     }
 
-    public void Load(string sceneName) {
+    public void Load(string sceneName = "") {
+        if (sceneName == "") {
+            sceneName = DefaultNextScene;
+        }
         if (FastMode)
             StartCoroutine(AsyncLoadScene_Fast(sceneName));
         else
             StartCoroutine(AsyncLoadScene(sceneName));
-
-        if (Text)
-            Text.gameObject.SetActive(true);
-        if (Slider)
-            Slider.gameObject.SetActive(true);
     }
 
     // 异步加载场景，进度条 Value 有过渡
     private IEnumerator AsyncLoadScene(string sceneName) {
-        int progress = 0, targetProgress = 0;
+        // 场景切换动画
+        if (Animator) {
+            Animator.SetTrigger("End");
+            yield return new WaitForEndOfFrame();
+            float sec = Animator.GetCurrentAnimatorStateInfo(0).length;
+            yield return new WaitForSeconds(sec);
+        }
+        // 显示进度条
+        ActivateProcessBar();
 
+        int progress = 0, targetProgress = 0;
         AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);  // Application.LoadLevelAsync()
         op.allowSceneActivation = false;
 
@@ -62,12 +74,23 @@ public class SceneMove : MonoBehaviour {
             SetProcessBar(progress);
             yield return new WaitForEndOfFrame();
         }
+        
         yield return new WaitForEndOfFrame();
         op.allowSceneActivation = true;
     }
 
     // 快速加载（原速），进度条 Value 无过渡
     private IEnumerator AsyncLoadScene_Fast(string sceneName) {
+        // 场景切换动画
+        if (Animator) {
+            Animator.SetTrigger("End");
+            yield return new WaitForEndOfFrame();
+            float sec = Animator.GetCurrentAnimatorStateInfo(0).length;
+            yield return new WaitForSeconds(sec);
+        }
+        // 显示进度条
+        ActivateProcessBar();
+
         AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
         op.allowSceneActivation = false;
         while (op.progress < 0.9f) {
@@ -77,6 +100,13 @@ public class SceneMove : MonoBehaviour {
         SetProcessBar(100);
         yield return new WaitForEndOfFrame();
         op.allowSceneActivation = true;
+    }
+
+    private void ActivateProcessBar(bool active = true) {
+        if (Text)
+            Text.gameObject.SetActive(active);
+        if (Slider)
+            Slider.gameObject.SetActive(active);
     }
 
     private void SetProcessBar(float process) {
