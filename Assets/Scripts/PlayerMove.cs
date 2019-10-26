@@ -140,10 +140,8 @@ public class PlayerMove : MonoBehaviour {
     }
 
     private void Flip(bool left) {
-        Vector3 scale = transform.localScale;
-        if ((left && scale.x < 0) || (!left && scale.x > 0))
+        if ((left && transform.right.x < 0) || (!left && transform.right.x > 0))
             return;
-        scale.x *= (left && scale.x > 0) || (!left && scale.x < 0) ? -1 : 1;
-        transform.localScale = scale;
+        transform.Rotate(new Vector3(0, 180));
     }
 }

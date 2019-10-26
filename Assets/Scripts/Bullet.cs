@@ -4,25 +4,9 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-   public int t = 0;
-    private Rigidbody rigidbody;
-    
-	void Start ()
-	{
-	    rigidbody = this.GetComponent<Rigidbody>();
-	}
-	
-	void Update () {
+    public float Speed = 10;
 
-	    if (t > 0)
-	    {
-            rigidbody.velocity=new Vector3(-10,0,0);
-	    }
-	    else
-	    {
-	        rigidbody.velocity=new Vector3(10,0,0);
-	    }
-	 
-	 
-	}
+    void Start() {
+        GetComponent<Rigidbody>().velocity = Speed * transform.right;
+    }
 }

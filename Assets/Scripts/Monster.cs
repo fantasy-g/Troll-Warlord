@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Monster : MonoBehaviour {
     
     public int Damage = 100;
@@ -10,11 +11,36 @@ public class Monster : MonoBehaviour {
     public float Speed = 5;
     protected float speed = 0;
     protected Vector3 direction = new Vector3(1, 0);
-    protected bool CollisonEnable = true;
+    protected Rigidbody2D rb;
+
+    protected float _gravityScale;
+    protected bool collisionEnable = true;
+    protected bool CollisionEnable
+    {
+        get { return collisionEnable; }
+        set
+        {
+            collisionEnable = value;
+            if (value) {
+                rb.gravityScale = _gravityScale;
+            }
+            else {
+                _gravityScale = rb.gravityScale;
+                rb.gravityScale = 0;
+            }
+            foreach (var collider in GetComponentsInChildren<Collider2D>()) {
+                collider.enabled = value;
+            }
+        }
+    }
+    
+
 
 
     void Start() {
         speed = Speed;
+        rb = GetComponent<Rigidbody2D>();
+        _gravityScale = rb.gravityScale;
     }
 
     void FixedUpdate() {
@@ -23,7 +49,7 @@ public class Monster : MonoBehaviour {
 
     // 碰撞
     private void OnCollisionEnter2D(Collision2D collision) {
-        if (!CollisonEnable) return;
+        if (!CollisionEnable) return;
         if (collision.gameObject.tag != "Player") {
             MoveBack(collision.collider);
         }
@@ -34,7 +60,7 @@ public class Monster : MonoBehaviour {
     }
     
     protected void OnTriggerEnter2D(Collider2D collision) {
-        if (!CollisonEnable) return;
+        if (!CollisionEnable) return;
         if (collision.gameObject.tag == "AirWall") {
             MoveBack(collision);
         }
@@ -78,7 +104,7 @@ public class Monster : MonoBehaviour {
 
     private IEnumerator _Die() {
         speed = 0;
-        CollisonEnable = false;
+        CollisionEnable = false;
         DieEffect();
         yield return new WaitForSeconds(waitForDieEffectTime);
         Destroy(gameObject);
