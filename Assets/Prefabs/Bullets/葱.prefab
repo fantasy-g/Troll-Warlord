@@ -21,11 +21,12 @@ GameObject:
   - component: {fileID: 4135464139706400}
   - component: {fileID: 212305214213728990}
   - component: {fileID: 82221224476813398}
-  - component: {fileID: 54316763146915220}
+  - component: {fileID: 50384215583833486}
+  - component: {fileID: 61429593067926438}
   - component: {fileID: 114917742819908902}
   m_Layer: 0
   m_Name: "\u8471"
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,28 +37,58 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1572191132176614}
-  m_LocalRotation: {x: 0.70888513, y: 0.7053239, z: -5.349502e-20, w: -5.3764727e-20}
-  m_LocalPosition: {x: -7.217251, y: 0.021144275, z: 0}
-  m_LocalScale: {x: 0.446, y: 0.452, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.45, y: 0.45, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -180, y: -0.000015258789, z: -89.711}
---- !u!54 &54316763146915220
-Rigidbody:
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50384215583833486
+Rigidbody2D:
+  serializedVersion: 4
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1572191132176614}
-  serializedVersion: 2
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
   m_Mass: 1
-  m_Drag: 0
+  m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_Constraints: 0
+  m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &61429593067926438
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1572191132176614}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 5, y: 7.04}
+    newSize: {x: 5, y: 7.04}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 5}
+  m_EdgeRadius: 0
 --- !u!82 &82221224476813398
 AudioSource:
   m_ObjectHideFlags: 1
@@ -164,7 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfea16cb8e7a8c747b420edcfb7af184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  t: 1
+  Speed: 10
 --- !u!212 &212305214213728990
 SpriteRenderer:
   m_ObjectHideFlags: 1
