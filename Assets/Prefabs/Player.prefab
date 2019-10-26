@@ -37,7 +37,6 @@ GameObject:
   - component: {fileID: 50928303161537520}
   - component: {fileID: 70404965772609962}
   - component: {fileID: 114850316142617754}
-  - component: {fileID: 114461467829522372}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -197,30 +196,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 355d74b3ea9be714780fc804127a5fd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slider: {fileID: 0}
+  ShootBtn: {fileID: 0}
   Bullets:
   - {fileID: 1485856690828082, guid: 793eb746724d9c2459ca0e2d0608bfbc, type: 2}
+  - {fileID: 1934212246775142, guid: dc443d027a11ba04983ea2b4262e61d2, type: 2}
   - {fileID: 1852457852594136, guid: f54f4616fb3ba8348bdac4e66f5b9dc7, type: 2}
   - {fileID: 1294890371255112, guid: adce0489cc6831742a6464782fb07108, type: 2}
+  - {fileID: 1572191132176614, guid: ca91d04d3a5f26745ab0ebf89da99f8f, type: 2}
   - {fileID: 1749063830118816, guid: 28286e2c072743349ab0ebfe93de96c3, type: 2}
   - {fileID: 1008606436314624, guid: 0f974e1100c85754f8b3950c8998b085, type: 2}
-  BulletNum: 0
-  weaponRight: {fileID: 0}
-  weaponLeft: {fileID: 0}
---- !u!114 &114461467829522372
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1461852265736514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 355d74b3ea9be714780fc804127a5fd3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Bullets: []
-  BulletNum: 0
-  weaponRight: {fileID: 0}
-  weaponLeft: {fileID: 0}
+  - {fileID: 1719270373612530, guid: 5ff8f89f3ae67b345a7bf82ff27ad191, type: 2}
+  SpecialPrefab: {fileID: 1419810478358280, guid: 21ed31f3a0fa99b458951c91d28d186a,
+    type: 2}
+  MasterName: Player
+  PowerDecreaseSpeed: 5
+  SpecialSliderColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &114850316142617754
 MonoBehaviour:
   m_ObjectHideFlags: 1

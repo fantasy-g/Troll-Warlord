@@ -7,15 +7,35 @@ using UnityEngine.UI;
 
 public class Weapon : MonoBehaviour
 {
+    public Slider slider;
     public TouchButton ShootBtn;
     public GameObject[] Bullets;
+    public GameObject SpecialPrefab;
     public string MasterName;
-    public GameObject Special;
+
+    public float PowerDecreaseSpeed = 5f;
+    public Color SpecialSliderColor;
+
     private int BulletNum = 0;
     private bool NewOne = true;
-    public Slider slider;
-    private Color color;
-    public float LoseTimer = 0;
+    private Color rawSliderColor;
+    
+    private float PowerValue {
+        get { return slider.value; }
+        set {
+            if (slider.value == 100 && value != 100) {
+                slider.fillRect.transform.GetComponent<Image>().color = rawSliderColor;
+            }
+            slider.value = Math.Min(value, 100);
+            slider.value = Math.Max(slider.value, 0);
+            if (slider.value == 100) {
+                slider.fillRect.transform.GetComponent<Image>().color = SpecialSliderColor;
+            }
+        }
+    }
+
+
+
     private void Start() {
         if (MasterName == "") {
             MasterName = gameObject.tag;
@@ -23,51 +43,47 @@ public class Weapon : MonoBehaviour
         if (ShootBtn) {
             ShootBtn.PointerDownEvent += Shoot;
         }
-        color = slider.fillRect.transform.GetComponent<Image>().color;
-    }
-
-    void Update () {
-        if (slider.value < 100)
-        {
-            LoseTimer += Time.deltaTime;
-            if (LoseTimer > 1)
-            {
-                LosePower();
-                LoseTimer = 0;
-            }
-
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                Shoot();
-               
-            }
+        if (slider) {
+            rawSliderColor = slider.fillRect.transform.GetComponent<Image>().color;
         }
-        else
-        {
-            slider.fillRect.transform.GetComponent<Image>().color = Color.red;
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                ShootSpecial();
-            }
+        if (SpecialSliderColor == null) {
+            SpecialSliderColor = Color.red;
         }
     }
+
+    void Update() {
+        if (PowerValue < 100) {
+            PowerValue -= PowerDecreaseSpeed * Time.deltaTime;
+        }
+        if (Input.GetKeyDown(KeyCode.F)) {
+            Shoot(PowerValue >= 100);
+        }
+    }
+
 
     private void Shoot(object sender,EventArgs e) {
-        Shoot();
-        ShootSpecial();
+        Shoot(PowerValue >= 100);
     }
 
-    private void Shoot() {
-        slider.value += 10;
-        GameObject g = Instantiate(Bullets[BulletNum], transform.position, transform.rotation);
-        g.GetComponent<Bullet>().MasterName = MasterName;
+    private void Shoot(bool special = false) {
+        PowerValue += 10; 
+        GameObject prefab = special ? SpecialPrefab : Bullets[BulletNum];
+        GameObject go = Instantiate(prefab, transform.position, transform.rotation);
+        go.GetComponent<Bullet>().MasterName = MasterName;
+
+        if (special) {
+            PowerValue = 0;
+            RefreshNewOne(0);
+            return;
+        }
+
         if (NewOne) {
-            float CurrentClipLength = g.GetComponent<AudioSource>().clip.length;
+            float CurrentClipLength = go.GetComponent<AudioSource>().clip.length;
             NewOne = false;
             StartCoroutine(RefreshNewOne(CurrentClipLength));
         }
         else {
-            g.GetComponent<AudioSource>().enabled = false;
+            go.GetComponent<AudioSource>().enabled = false;
         }
     }
 
@@ -76,44 +92,5 @@ public class Weapon : MonoBehaviour
         NewOne = true;
         BulletNum = ++BulletNum % Bullets.Length;
     }
-    void ShootSpecial()
-    {
-        GameObject g = Instantiate(Special, transform.position, transform.rotation);
-        g.GetComponent<Bullet>().MasterName = MasterName;
-        if (NewOne)
-        {
-            slider.value += 20;
-            float CurrentClipLength = g.GetComponent<AudioSource>().clip.length - 0.25f;
-            NewOne = false;
-            StartCoroutine(RefreshNewOne1(CurrentClipLength));
-        }
-        else
-        {
-            g.GetComponent<AudioSource>().enabled = false;
-        }
-    }
-    private IEnumerator RefreshNewOne1(float time)
-    {
-        yield return new WaitForSeconds(time);
-        NewOne = true;
-        BulletNum = ++BulletNum % Bullets.Length;
-        slider.value = 0;
-        slider.fillRect.transform.GetComponent<Image>().color = color;
-    }
-
-
-    private void LosePower()
-    {
-        if (slider.value > 0)
-        {
-            slider.value -= 5;
-        }
-
-        if (slider.value < 0)
-        {
-            slider.value = 0;
-        }
-
-
-    }
+    
 }
