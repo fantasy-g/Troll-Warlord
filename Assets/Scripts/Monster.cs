@@ -64,6 +64,12 @@ public class Monster : MonoBehaviour {
         if (collision.gameObject.tag == "AirWall") {
             MoveBack(collision);
         }
+        else if (collision.gameObject.tag == "Bullet") {
+            Bullet bullet = collision.gameObject.GetComponent<Bullet>();
+            if (bullet.MasterName != "Monster") {
+                Die();
+            }
+        }
     }
 
     protected void Move() {

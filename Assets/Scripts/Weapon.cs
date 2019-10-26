@@ -6,19 +6,27 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public GameObject[] Bullets;
+    public string MasterName;
 
     private int BulletNum = 0;
     private bool NewOne = true;
 
 
-	void Update () {
+    private void Start() {
+        if (MasterName == "") {
+            MasterName = gameObject.tag;
+        }
+    }
+
+    void Update () {
         if (Input.GetKeyDown(KeyCode.F)) {
             Shoot();
         }
 	}
 
-    void Shoot() {
+    private void Shoot() {
         GameObject g = Instantiate(Bullets[BulletNum], transform.position, transform.rotation);
+        g.GetComponent<Bullet>().MasterName = MasterName;
         if (NewOne) {
             float CurrentClipLength = g.GetComponent<AudioSource>().clip.length;
             NewOne = false;
@@ -29,7 +37,7 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    IEnumerator RefreshNewOne(float time) {
+    private IEnumerator RefreshNewOne(float time) {
         yield return new WaitForSeconds(time);
         NewOne = true;
         BulletNum = ++BulletNum % Bullets.Length;
