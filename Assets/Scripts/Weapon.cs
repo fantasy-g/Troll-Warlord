@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    public TouchButton ShootBtn;
     public GameObject[] Bullets;
     public string MasterName;
 
@@ -16,6 +18,9 @@ public class Weapon : MonoBehaviour
         if (MasterName == "") {
             MasterName = gameObject.tag;
         }
+        if (ShootBtn) {
+            ShootBtn.PointerDownEvent += Shoot;
+        }
     }
 
     void Update () {
@@ -23,6 +28,10 @@ public class Weapon : MonoBehaviour
             Shoot();
         }
 	}
+
+    private void Shoot(object sender,EventArgs e) {
+        Shoot();
+    }
 
     private void Shoot() {
         GameObject g = Instantiate(Bullets[BulletNum], transform.position, transform.rotation);
