@@ -536,13 +536,35 @@ Prefab:
       propertyPath: SpaceBtn
       value: 
       objectReference: {fileID: 593701114}
-    - target: {fileID: 1461852265736514, guid: 803bfa9306df3914591f36edf56f876a, type: 2}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114317205564439132, guid: 803bfa9306df3914591f36edf56f876a,
+        type: 2}
+      propertyPath: weapon
+      value: 
+      objectReference: {fileID: 503193100}
+    - target: {fileID: 114317205564439132, guid: 803bfa9306df3914591f36edf56f876a,
+        type: 2}
+      propertyPath: w
+      value: 
+      objectReference: {fileID: 503193100}
+    - target: {fileID: 114317205564439132, guid: 803bfa9306df3914591f36edf56f876a,
+        type: 2}
+      propertyPath: weaponRight
+      value: 
+      objectReference: {fileID: 503193100}
+    - target: {fileID: 114317205564439132, guid: 803bfa9306df3914591f36edf56f876a,
+        type: 2}
+      propertyPath: weaponLeft
+      value: 
+      objectReference: {fileID: 1249011981}
+    m_RemovedComponents:
+    - {fileID: 114461467829522372, guid: 803bfa9306df3914591f36edf56f876a, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 803bfa9306df3914591f36edf56f876a, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &503193100 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1716799528408628, guid: 803bfa9306df3914591f36edf56f876a,
+    type: 2}
+  m_PrefabInternal: {fileID: 464415202}
 --- !u!1 &593701110
 GameObject:
   m_ObjectHideFlags: 0
@@ -1347,6 +1369,34 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1249011981
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1249011982}
+  m_Layer: 0
+  m_Name: Weapon2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1249011982
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1249011981}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.26, y: 0.44, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 965157801}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1253550289
 GameObject:
   m_ObjectHideFlags: 0
