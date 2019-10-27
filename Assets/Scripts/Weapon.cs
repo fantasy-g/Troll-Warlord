@@ -15,6 +15,7 @@ public class Weapon : MonoBehaviour
 
     public float PowerDecreaseSpeed = 5f;
     public Color SpecialSliderColor;
+    public bool AllowBulletFollowSpecial = false;
 
     private int BulletNum = 0;
     private bool NewOne = true;
@@ -68,13 +69,9 @@ public class Weapon : MonoBehaviour
     }
 
     private void Shoot(bool _special = false) {
-        if (_special == false && special == true) {
-            Debug.Log("发射失败【正在特殊技】");
+        if (!AllowBulletFollowSpecial && _special == false && special == true)
             return;     // 刚发射了特殊子弹的时段
-        }
-        else {
-            special = _special;
-        }
+        special = _special;
 
         PowerValue += 10;
         GameObject prefab = special ? SpecialPrefab : Bullets[BulletNum];
@@ -83,9 +80,14 @@ public class Weapon : MonoBehaviour
 
         if (special) {
             PowerValue = 0;
-            float CurrentClipLength = go.GetComponent<AudioSource>().clip.length;
-            StartCoroutine(RefreshNewOne(CurrentClipLength));
-            StartCoroutine(RefreshSpecial(CurrentClipLength));
+            if (AllowBulletFollowSpecial) {
+                StartCoroutine(RefreshNewOne(0));
+            }
+            else {
+                float CurrentClipLength = go.GetComponent<AudioSource>().clip.length;
+                StartCoroutine(RefreshNewOne(CurrentClipLength));
+                StartCoroutine(RefreshSpecial(CurrentClipLength));
+            }
             return;
         }
 
