@@ -797,6 +797,11 @@ Prefab:
       propertyPath: ShootBtn
       value: 
       objectReference: {fileID: 395673270}
+    - target: {fileID: 114317205564439132, guid: 803bfa9306df3914591f36edf56f876a,
+        type: 2}
+      propertyPath: PowerDecreaseSpeed
+      value: 28
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 803bfa9306df3914591f36edf56f876a, type: 2}
   m_IsPrefabAsset: 0

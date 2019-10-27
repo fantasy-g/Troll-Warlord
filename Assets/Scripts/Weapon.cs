@@ -19,7 +19,9 @@ public class Weapon : MonoBehaviour
     private int BulletNum = 0;
     private bool NewOne = true;
     private Color rawSliderColor;
-    
+    private bool special = false;
+
+
     private float PowerValue {
         get { return slider.value; }
         set {
@@ -65,15 +67,25 @@ public class Weapon : MonoBehaviour
         Shoot(PowerValue >= 100);
     }
 
-    private void Shoot(bool special = false) {
-        PowerValue += 10; 
+    private void Shoot(bool _special = false) {
+        if (_special == false && special == true) {
+            Debug.Log("发射失败【正在特殊技】");
+            return;     // 刚发射了特殊子弹的时段
+        }
+        else {
+            special = _special;
+        }
+
+        PowerValue += 10;
         GameObject prefab = special ? SpecialPrefab : Bullets[BulletNum];
         GameObject go = Instantiate(prefab, transform.position, transform.rotation);
         go.GetComponent<Bullet>().MasterName = MasterName;
 
         if (special) {
             PowerValue = 0;
-            RefreshNewOne(0);
+            float CurrentClipLength = go.GetComponent<AudioSource>().clip.length;
+            StartCoroutine(RefreshNewOne(CurrentClipLength));
+            StartCoroutine(RefreshSpecial(CurrentClipLength));
             return;
         }
 
@@ -91,6 +103,11 @@ public class Weapon : MonoBehaviour
         yield return new WaitForSeconds(time);
         NewOne = true;
         BulletNum = ++BulletNum % Bullets.Length;
+    }
+
+    private IEnumerator RefreshSpecial(float time) {
+        yield return new WaitForSeconds(time);
+        special = false;
     }
     
 }
