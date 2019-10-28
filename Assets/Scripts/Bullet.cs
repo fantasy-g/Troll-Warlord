@@ -14,43 +14,60 @@ public class Bullet : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        Bullet broBullet = collision.gameObject.GetComponent<Bullet>();
-        if (broBullet) {
-            if (broBullet.MasterName == MasterName)
+        if (collision.tag == "Bullet") {
+            Bullet broBullet = collision.gameObject.GetComponent<Bullet>();
+            if (broBullet) {
+                if (broBullet.MasterName != MasterName) {
+                    Die();
+                }
                 return;
-            else
-                Die();
+            }
         }
-
-        if (collision.tag != MasterName) {
+        else if (collision.tag != MasterName) {
             Die();
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.tag != MasterName)
+        if (collision.gameObject.tag != MasterName) {
             Die();
+        }
     }
 
     public void Die() {
         StartCoroutine(_Die());
     }
 
+
+    private bool dead = false;
     private IEnumerator _Die() {
+        if (dead) yield break;
+        dead = true;
+
         float delay = 0;
         AudioSource audio = GetComponent<AudioSource>();
         if (audio && audio.enabled == true) {
             delay = audio.clip.length;
         }
-        DieEffect();
+
+        float effectDelay = DieEffect();
+        delay = Mathf.Max(effectDelay, delay);
         yield return new WaitForSeconds(delay);
         Destroy(gameObject);    // temp
     }
 
-    private void DieEffect() {
+    private float DieEffect() {
+        float delay = 0;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         foreach (var renderer in GetComponentsInChildren<SpriteRenderer>()) {
             renderer.enabled = false;
         }
+
+        ParticleSystem particle = GetComponentInChildren<ParticleSystem>();
+        if (particle) {
+            particle.Play();
+            delay = Mathf.Max(particle.main.duration, delay);
+        }
+        return delay;
     }
 }
