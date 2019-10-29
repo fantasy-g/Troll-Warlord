@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour {
     public Joystick joystick;
     public TouchButton SpaceBtn;
-    public float Speed = 5;
+    public float Speed = 7;
 
     private new Rigidbody2D rigidbody;
     private Animator animator;
@@ -23,7 +23,7 @@ public class PlayerMove : MonoBehaviour {
 
     #region [Jump]
     [Header("Jump")]
-    public float JumpForce = 15;
+    public float JumpForce = 25;
     public float JumpTime = .35f;
     public int JumpTimes = 2;
 
@@ -34,7 +34,13 @@ public class PlayerMove : MonoBehaviour {
     private bool isJumping = false;
     private bool hasAccFallSpeed = false;
     #endregion
-    
+
+    [Header("Conf")]
+    public bool EnableDecreaseInJumpUp = true;
+    public float FallForceMulti = 1.2f;
+    public float FallLerpTime = .08f;
+    public float DecreaseThresholdInJumpUp = 0.5f;  // 1->0
+
 
     void Start () {
         if (SpaceBtn != null) {
@@ -44,7 +50,7 @@ public class PlayerMove : MonoBehaviour {
 
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
-        FallForce = 1.5f * JumpForce;
+        FallForce = FallForceMulti * JumpForce;
     }
 	
 	void Update () {
@@ -67,17 +73,19 @@ public class PlayerMove : MonoBehaviour {
         // 加速下落
         if (rigidbody.velocity.y < 0 && !hasAccFallSpeed) {
             fallForce = 0;
+            FallForce = FallForceMulti * JumpForce;
             hasAccFallSpeed = true;
         }
         // 正在下落 速度控制
         if (hasAccFallSpeed) {
-            fallForce = Mathf.Lerp(fallForce, FallForce, .12f);     // TEST_LerpTime = .12f
+            fallForce = Mathf.Lerp(fallForce, FallForce, FallLerpTime);     // TEST_LerpTime = .12f
             rigidbody.velocity = new Vector2(rigidbody.velocity.x, -fallForce);
         }
 
         // 上升时的减速
-        if (isJumping && !hasAccFallSpeed) {
-            rigidbody.velocity = new Vector2(rigidbody.velocity.x, (jumpTimer / JumpTime) * JumpForce);
+        if (EnableDecreaseInJumpUp && isJumping && !hasAccFallSpeed) {
+            if (jumpTimer / JumpTime < DecreaseThresholdInJumpUp)
+                rigidbody.velocity = new Vector2(rigidbody.velocity.x, (jumpTimer / JumpTime) * JumpForce);
         }
 
         // 下落后落到地面

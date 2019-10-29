@@ -35,7 +35,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4317980781780928}
   - component: {fileID: 50928303161537520}
-  - component: {fileID: 70404965772609962}
+  - component: {fileID: 61769515451831648}
   - component: {fileID: 114850316142617754}
   m_Layer: 0
   m_Name: Player
@@ -123,7 +123,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1461852265736514}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.59, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4000755371895122}
@@ -152,8 +152,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!70 &70404965772609962
-CapsuleCollider2D:
+--- !u!61 &61769515451831648
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -164,9 +164,19 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.3, y: 0}
-  m_Size: {x: 0.5, y: 1.7}
-  m_Direction: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!95 &95579787606091074
 Animator:
   serializedVersion: 3
@@ -210,8 +220,9 @@ MonoBehaviour:
   SpecialPrefab: {fileID: 1419810478358280, guid: 21ed31f3a0fa99b458951c91d28d186a,
     type: 2}
   MasterName: Player
-  PowerDecreaseSpeed: 5
+  PowerDecreaseSpeed: 28
   SpecialSliderColor: {r: 1, g: 0, b: 0, a: 1}
+  AllowBulletFollowSpecial: 1
 --- !u!114 &114850316142617754
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -225,15 +236,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joystick: {fileID: 0}
   SpaceBtn: {fileID: 0}
-  Speed: 5
+  Speed: 8
   GroundLayerMask:
     serializedVersion: 2
     m_Bits: 256
   FootPos: {fileID: 4017742448066614}
   GroundCheckRadius: 0.2
-  JumpForce: 15
-  JumpTime: 0.35
+  JumpForce: 30
+  JumpTime: 0.3
   JumpTimes: 2
+  EnableDecreaseInJumpUp: 1
+  FallForceMulti: 1.2
+  FallLerpTime: 0.08
+  DecreaseThresholdInJumpUp: 0.7
 --- !u!212 &212550898800991118
 SpriteRenderer:
   m_ObjectHideFlags: 1
