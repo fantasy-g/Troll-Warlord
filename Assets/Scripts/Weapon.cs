@@ -72,7 +72,7 @@ public class Weapon : MonoBehaviour
             return;     // 刚发射了特殊子弹的时段
         special = _special;
 
-        PowerValue += 10;
+        PowerValue += 2;
         GameObject prefab = special ? SpecialPrefab : Bullets[BulletNum];
         GameObject go = Instantiate(prefab, transform.position, transform.rotation);
         go.GetComponent<Bullet>().MasterName = MasterName;
@@ -91,7 +91,7 @@ public class Weapon : MonoBehaviour
         }
 
         if (NewOne) {
-            float CurrentClipLength = go.GetComponent<AudioSource>().clip.length;
+            float CurrentClipLength = go.GetComponent<AudioSource>().clip.length-0.25f;
             NewOne = false;
             StartCoroutine(RefreshNewOne(CurrentClipLength));
         }

@@ -40,7 +40,7 @@ public class PlayerMove : MonoBehaviour {
     public float FallForceMulti = 1.2f;
     public float FallLerpTime = .08f;
     public float DecreaseThresholdInJumpUp = 0.5f;  // 1->0
-
+    
 
     void Start () {
         if (SpaceBtn != null) {
@@ -51,6 +51,8 @@ public class PlayerMove : MonoBehaviour {
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
         FallForce = FallForceMulti * JumpForce;
+
+         
     }
 	
 	void Update () {

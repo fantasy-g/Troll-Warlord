@@ -4019,6 +4019,7 @@ GameObject:
   - component: {fileID: 451586399}
   - component: {fileID: 451586398}
   - component: {fileID: 451586397}
+  - component: {fileID: 451586400}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameController
@@ -4058,9 +4059,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deadposy: -4.2
-  replay: {fileID: 1583685721}
-  deadtext: {fileID: 1721519787}
   PlayerisDead: 0
+  Player: {fileID: 1452005534}
 --- !u!4 &451586399
 Transform:
   m_ObjectHideFlags: 0
@@ -4074,6 +4074,101 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &451586400
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 451586396}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: ed1e951a2c965c742a02599d03f673c2, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &485406494
 GameObject:
   m_ObjectHideFlags: 0
@@ -6971,6 +7066,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 815269734}
     m_Modifications:
+    - target: {fileID: 114317205564439132, guid: 803bfa9306df3914591f36edf56f876a,
+        type: 2}
+      propertyPath: Bullets.Array.size
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4317980781780928, guid: 803bfa9306df3914591f36edf56f876a, type: 2}
       propertyPath: m_LocalPosition.x
       value: -7.48
@@ -7031,7 +7131,7 @@ Prefab:
     - target: {fileID: 114317205564439132, guid: 803bfa9306df3914591f36edf56f876a,
         type: 2}
       propertyPath: AllowBulletFollowSpecial
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114850316142617754, guid: 803bfa9306df3914591f36edf56f876a,
         type: 2}
@@ -7063,6 +7163,66 @@ Prefab:
       propertyPath: m_Size.x
       value: 0.6604848
       objectReference: {fileID: 0}
+    - target: {fileID: 114317205564439132, guid: 803bfa9306df3914591f36edf56f876a,
+        type: 2}
+      propertyPath: Bullets.Array.data[0]
+      value: 
+      objectReference: {fileID: 1485856690828082, guid: 793eb746724d9c2459ca0e2d0608bfbc,
+        type: 2}
+    - target: {fileID: 114317205564439132, guid: 803bfa9306df3914591f36edf56f876a,
+        type: 2}
+      propertyPath: Bullets.Array.data[1]
+      value: 
+      objectReference: {fileID: 1934212246775142, guid: dc443d027a11ba04983ea2b4262e61d2,
+        type: 2}
+    - target: {fileID: 114317205564439132, guid: 803bfa9306df3914591f36edf56f876a,
+        type: 2}
+      propertyPath: Bullets.Array.data[2]
+      value: 
+      objectReference: {fileID: 1852457852594136, guid: f54f4616fb3ba8348bdac4e66f5b9dc7,
+        type: 2}
+    - target: {fileID: 114317205564439132, guid: 803bfa9306df3914591f36edf56f876a,
+        type: 2}
+      propertyPath: Bullets.Array.data[3]
+      value: 
+      objectReference: {fileID: 1294890371255112, guid: adce0489cc6831742a6464782fb07108,
+        type: 2}
+    - target: {fileID: 114317205564439132, guid: 803bfa9306df3914591f36edf56f876a,
+        type: 2}
+      propertyPath: Bullets.Array.data[4]
+      value: 
+      objectReference: {fileID: 1572191132176614, guid: ca91d04d3a5f26745ab0ebf89da99f8f,
+        type: 2}
+    - target: {fileID: 114317205564439132, guid: 803bfa9306df3914591f36edf56f876a,
+        type: 2}
+      propertyPath: Bullets.Array.data[5]
+      value: 
+      objectReference: {fileID: 1749063830118816, guid: 28286e2c072743349ab0ebfe93de96c3,
+        type: 2}
+    - target: {fileID: 114317205564439132, guid: 803bfa9306df3914591f36edf56f876a,
+        type: 2}
+      propertyPath: Bullets.Array.data[6]
+      value: 
+      objectReference: {fileID: 1008606436314624, guid: 0f974e1100c85754f8b3950c8998b085,
+        type: 2}
+    - target: {fileID: 114317205564439132, guid: 803bfa9306df3914591f36edf56f876a,
+        type: 2}
+      propertyPath: Bullets.Array.data[7]
+      value: 
+      objectReference: {fileID: 1719270373612530, guid: 5ff8f89f3ae67b345a7bf82ff27ad191,
+        type: 2}
+    - target: {fileID: 114317205564439132, guid: 803bfa9306df3914591f36edf56f876a,
+        type: 2}
+      propertyPath: Bullets.Array.data[8]
+      value: 
+      objectReference: {fileID: 1423825259212560, guid: ada65db902b45e74e84d9f1c2fc95287,
+        type: 2}
+    - target: {fileID: 114317205564439132, guid: 803bfa9306df3914591f36edf56f876a,
+        type: 2}
+      propertyPath: Bullets.Array.data[9]
+      value: 
+      objectReference: {fileID: 1069267825743416, guid: 8303a6e67491aa24d8edf3402875190f,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 803bfa9306df3914591f36edf56f876a, type: 2}
   m_IsPrefabAsset: 0

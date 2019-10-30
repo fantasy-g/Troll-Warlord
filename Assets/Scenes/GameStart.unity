@@ -992,6 +992,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 881f14826b737f343b39ea1102d62674, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deadposy: -4.2
+  PlayerisDead: 0
 --- !u!4 &1289976646
 Transform:
   m_ObjectHideFlags: 0
